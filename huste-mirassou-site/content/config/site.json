@@ -1,0 +1,14 @@
+{
+  "site_title": "Mon Site TinaCMS",
+  "site_description": "Un site web moderne créé avec Next.js et TinaCMS",
+  "contact": {
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@monsite.fr",
+    "address": "123 Rue de la Paix\n75001 Paris\nFrance"
+  },
+  "social": {
+    "facebook": "https://facebook.com/monsite",
+    "instagram": "https://instagram.com/monsite",
+    "linkedin": "https://linkedin.com/company/monsite"
+  }
+}
