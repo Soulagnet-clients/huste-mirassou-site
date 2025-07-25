@@ -1,6 +1,6 @@
 [build]
-  # Commande de build pour TinaCMS + Next.js
-  command = "npm run build"
+  # Commande de build pour TinaCMS Cloud + Next.js
+  command = "npm run tina:build"
 
   # Dossier de sortie Next.js (mode serveur)
   publish = ".next"
