@@ -29,7 +29,7 @@ export default function RealisationsSection() {
         // Charger les réalisations
         const realisationsResult = await client.queries.realisationConnection();
         const realisationsData = realisationsResult.data.realisationConnection.edges?.map(edge => edge?.node) || [];
-        setRealisations(realisationsData.filter(realisation => realisation?.published) as Realisation[]);
+        setRealisations(realisationsData.filter(realisation => realisation) as Realisation[]);
 
         // Charger les catégories
         try {

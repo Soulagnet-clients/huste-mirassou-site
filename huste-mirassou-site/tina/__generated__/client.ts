@@ -15,6 +15,7 @@ const staticData = {
           date: "2024-03-15",
           lieu: "Mirassou",
           categorie: { value: "terrasse", label: "Terrasse" },
+          published: true,
           _sys: { filename: "terrasse-beton-desactive-mirassou.mdx" }
         }
       },
@@ -27,6 +28,7 @@ const staticData = {
           date: "2024-02-20",
           lieu: "Husté",
           categorie: { value: "maconnerie", label: "Maçonnerie" },
+          published: true,
           _sys: { filename: "muret-soutenement-huste.mdx" }
         }
       },
@@ -39,6 +41,7 @@ const staticData = {
           date: "2024-01-10",
           lieu: "Landes",
           categorie: { value: "terrassement", label: "Terrassement" },
+          published: true,
           _sys: { filename: "terrassement-.mdx" }
         }
       }

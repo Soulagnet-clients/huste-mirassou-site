@@ -20,6 +20,7 @@ export interface Realisation {
   client?: string;
   duration?: string;
   surface?: string;
+  published?: boolean; // Statut de publication
   _sys?: {
     filename: string;
   };
