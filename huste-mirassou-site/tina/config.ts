@@ -13,8 +13,9 @@ const branch =
 export default defineConfig({
   branch,
 
-  // Pas de configuration d'authentification pour le développement local
-  // TinaCMS fonctionne en mode local sans token
+  // Configuration TinaCMS Cloud
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+  token: process.env.NEXT_PUBLIC_TINA_TOKEN,
 
   build: {
     outputFolder: "admin",

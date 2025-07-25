@@ -1,9 +1,9 @@
 [build]
   # Commande de build pour TinaCMS + Next.js
-  command = "npm run tina:build"
-  
-  # Dossier de sortie Next.js
-  publish = "out"
+  command = "npm run build"
+
+  # Dossier de sortie Next.js (mode serveur)
+  publish = ".next"
   
   # Variables d'environnement pour le build
   environment = { NODE_VERSION = "18" }
