@@ -5,10 +5,13 @@ import { client } from '../../tina/__generated__/client';
 
 interface Service {
   title: string;
-  excerpt: string;
-  category: string;
-  features: { feature: string }[];
-  price_range?: string;
+  excerpt?: string | null;
+  icon?: string | null;
+  price_range?: string | null;
+  duration?: string | null;
+  features?: { feature: string }[] | null;
+  featured?: boolean | null;
+  published?: boolean | null;
 }
 
 export default function ServicesSection() {
@@ -28,7 +31,6 @@ export default function ServicesSection() {
           {
             title: "Terrasses",
             excerpt: "Création de terrasses en béton, pierre naturelle ou composite. Étanchéité et finitions soignées.",
-            category: "terrasse",
             features: [
               { feature: "Béton désactivé" },
               { feature: "Pierre naturelle" },
@@ -39,7 +41,6 @@ export default function ServicesSection() {
           {
             title: "Maçonnerie",
             excerpt: "Murets, murs de soutènement, fondations. Travaux de maçonnerie traditionnelle et moderne.",
-            category: "maconnerie",
             features: [
               { feature: "Murets" },
               { feature: "Murs de soutènement" },
@@ -56,15 +57,7 @@ export default function ServicesSection() {
     fetchServices();
   }, []);
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'terrasse': return '🏗️';
-      case 'maconnerie': return '🧱';
-      case 'amenagement': return '🌿';
-      case 'renovation': return '🔧';
-      default: return '🏠';
-    }
-  };
+
 
   return (
     <section id="services" className="py-20 bg-gray-50">
@@ -91,7 +84,11 @@ export default function ServicesSection() {
               <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                 {/* Icône */}
                 <div className="text-4xl mb-4 text-center">
-                  {getCategoryIcon(service.category)}
+                  {service.icon ? (
+                    <img src={service.icon} alt={service.title} className="w-12 h-12 mx-auto" />
+                  ) : (
+                    '🏗️'
+                  )}
                 </div>
 
                 {/* Titre */}

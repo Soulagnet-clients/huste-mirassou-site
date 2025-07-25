@@ -3,28 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import { client } from '../../tina/__generated__/client';
-
-interface RealisationGallery {
-  image: string;
-  caption: string;
-}
-
-interface Realisation {
-  title: string;
-  description: string;
-  body?: any; // Contenu rich-text de TinaCMS
-  date: string;
-  type?: string | { value: string; label: string; }; // Ancien format
-  categorie?: string | { value: string; label: string; }; // Nouveau format
-  featured_image?: string;
-  gallery?: RealisationGallery[];
-  location?: string;
-  client?: string;
-  duration?: string;
-  surface?: string;
-  lieu?: string; // Champ TinaCMS
-  excerpt?: string; // Description courte TinaCMS
-}
+import { Realisation, RealisationGallery } from '../types';
 
 interface RealisationModalProps {
   realisation: Realisation | null;
@@ -343,19 +322,19 @@ export default function RealisationModal({ realisation, isOpen, onClose }: Reali
                     <TinaMarkdown
                       content={displayRealisation.body}
                       components={{
-                        h1: (props) => <h1 className="text-xl font-bold text-gray-900 mt-0 mb-4 border-b border-gray-200 pb-2" {...props} />,
-                        h2: (props) => <h2 className="text-lg font-semibold text-gray-900 mt-6 mb-3" {...props} />,
-                        p: (props) => <p className="mb-4 text-gray-700 leading-relaxed" {...props} />,
-                        ul: (props) => <ul className="mb-4 list-none pl-0" {...props} />,
-                        ol: (props) => <ol className="mb-4 list-none pl-0" {...props} />,
-                        li: (props) => <li className="text-gray-700 leading-relaxed mb-1 flex items-start" {...props} />,
-                        lic: (props) => (
+                        h1: (props: any) => <h1 className="text-xl font-bold text-gray-900 mt-0 mb-4 border-b border-gray-200 pb-2" {...props} />,
+                        h2: (props: any) => <h2 className="text-lg font-semibold text-gray-900 mt-6 mb-3" {...props} />,
+                        p: (props: any) => <p className="mb-4 text-gray-700 leading-relaxed" {...props} />,
+                        ul: (props: any) => <ul className="mb-4 list-none pl-0" {...props} />,
+                        ol: (props: any) => <ol className="mb-4 list-none pl-0" {...props} />,
+                        li: (props: any) => <li className="text-gray-700 leading-relaxed mb-1 flex items-start" {...props} />,
+                        lic: (props: any) => (
                           <div className="flex items-start">
                             <span className="text-gray-400 mr-2 mt-1">•</span>
                             <span className="flex-1" {...props} />
                           </div>
                         ),
-                        strong: (props) => <strong className="font-semibold text-gray-900" {...props} />,
+                        strong: (props: any) => <strong className="font-semibold text-gray-900" {...props} />,
                       }}
                     />
                 </div>

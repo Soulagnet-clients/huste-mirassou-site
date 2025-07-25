@@ -3,19 +3,7 @@
 import { useState, useEffect } from 'react';
 import { client } from '../../tina/__generated__/client';
 import RealisationModal from './RealisationModal';
-
-interface Realisation {
-  title: string;
-  type?: string | { value: string; label: string; }; // Support ancien format
-  categorie?: string | { value: string; label: string; }; // Nouveau format
-  lieu: string;
-  excerpt: string;
-  featured_image?: string;
-  date: string;
-  _sys: {
-    filename: string;
-  };
-}
+import { Realisation, Category } from '../types';
 
 export default function RealisationsSection() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -24,8 +12,6 @@ export default function RealisationsSection() {
   const [selectedRealisation, setSelectedRealisation] = useState<Realisation | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([{ id: 'all', label: 'Tous' }]);
-  const [projectTypes, setProjectTypes] = useState<ProjectType[]>([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   const openModal = (realisation: Realisation) => {
     setSelectedRealisation(realisation);
@@ -152,7 +138,7 @@ export default function RealisationsSection() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredRealisations.map((realisation, index) => (
               <div
-                key={realisation._sys.filename}
+                key={realisation._sys?.filename || `realisation-${index}`}
                 className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
                 onClick={() => openModal(realisation)}
               >

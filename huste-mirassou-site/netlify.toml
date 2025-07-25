@@ -1,0 +1,60 @@
+[build]
+  # Commande de build pour TinaCMS + Next.js
+  command = "npm run tina:build"
+  
+  # Dossier de sortie Next.js
+  publish = "out"
+  
+  # Variables d'environnement pour le build
+  environment = { NODE_VERSION = "18" }
+
+[build.processing]
+  # Optimisation des images
+  skip_processing = false
+
+[build.processing.images]
+  # Compression des images
+  compress = true
+
+[[redirects]]
+  # Redirection pour l'admin TinaCMS
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+[[redirects]]
+  # Redirection pour l'API GraphQL (en développement seulement)
+  from = "/api/graphql"
+  to = "/.netlify/functions/graphql"
+  status = 200
+
+[[headers]]
+  # Headers de sécurité
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  # Headers pour les assets statiques
+  for = "/uploads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  # Headers pour les images
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+    
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+    
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
