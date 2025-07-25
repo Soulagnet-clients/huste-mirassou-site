@@ -94,3 +94,7 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+# Test reports
+playwright-report/
+test-results/
+.env.local
