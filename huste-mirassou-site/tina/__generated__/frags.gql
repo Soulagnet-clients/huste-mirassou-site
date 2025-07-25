@@ -1,0 +1,99 @@
+fragment CategorieParts on Categorie {
+  __typename
+  label
+  value
+  title
+  description
+}
+
+fragment RealisationParts on Realisation {
+  __typename
+  title
+  date
+  categorie {
+    ... on Categorie {
+      __typename
+      label
+      value
+      title
+      description
+    }
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+  }
+  lieu
+  client
+  excerpt
+  featured_image
+  location
+  surface
+  duration
+  gallery {
+    __typename
+    image
+    caption
+  }
+  featured
+  published
+  body
+}
+
+fragment ServiceParts on Service {
+  __typename
+  title
+  excerpt
+  icon
+  price_range
+  duration
+  features {
+    __typename
+    feature
+  }
+  featured
+  published
+  body
+}
+
+fragment ConfigParts on Config {
+  __typename
+  company_name
+  tagline
+  description
+  hero_image
+  contact {
+    __typename
+    phone
+    email
+    address
+    city
+    postal_code
+  }
+  business {
+    __typename
+    siret
+    insurance
+    zone_intervention
+    horaires {
+      __typename
+      lundi_vendredi
+      samedi
+      dimanche
+    }
+  }
+  social {
+    __typename
+    facebook
+    instagram
+    linkedin
+  }
+}
