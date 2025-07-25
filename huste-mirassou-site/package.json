@@ -19,6 +19,7 @@
     "test:interactions": "playwright test tests/03-interactions-utilisateur.spec.ts",
     "test:performance": "playwright test tests/04-performance-accessibilite.spec.ts",
     "test:tinacms": "playwright test tests/05-integration-tinacms.spec.ts",
+    "test:ajustements": "playwright test tests/06-ajustements-ui.spec.ts",
     "test:report": "playwright show-report"
   },
   "dependencies": {

@@ -8,7 +8,15 @@ export default function Navigation() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Calculer l'offset pour compenser la navigation fixe (64px = h-16)
+      const navHeight = 64;
+      const additionalOffset = 20; // Marge supplémentaire pour un meilleur espacement
+      const elementPosition = element.offsetTop - navHeight - additionalOffset;
+
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
     }
     setIsMenuOpen(false);
   };
