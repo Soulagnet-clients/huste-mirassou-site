@@ -10,9 +10,8 @@ const branch =
 export default defineConfig({
   branch,
 
-  // Configuration pour le développement local
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  token: process.env.TINA_TOKEN,
+  // Pas de configuration d'authentification pour le développement local
+  // TinaCMS fonctionne en mode local sans token
 
   build: {
     outputFolder: "admin",
@@ -29,61 +28,53 @@ export default defineConfig({
   // Schéma de contenu
   schema: {
     collections: [
-      // Collection pour les pages
+      // Collection pour les réalisations
       {
-        name: "page",
-        label: "Pages",
-        path: "content/pages",
+        name: "realisation",
+        label: "Réalisations",
+        path: "content/realisations",
         format: "mdx",
         fields: [
           {
             type: "string",
             name: "title",
-            label: "Titre",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "string",
-            name: "description",
-            label: "Description",
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Contenu",
-            isBody: true,
-          },
-        ],
-        ui: {
-          router: ({ document }) => `/${document._sys.filename}`,
-        },
-      },
-      
-      // Collection pour les articles/posts
-      {
-        name: "post",
-        label: "Articles",
-        path: "content/posts",
-        format: "mdx",
-        fields: [
-          {
-            type: "string",
-            name: "title",
-            label: "Titre",
+            label: "Titre du projet",
             isTitle: true,
             required: true,
           },
           {
             type: "datetime",
             name: "date",
-            label: "Date",
+            label: "Date de réalisation",
             required: true,
           },
           {
             type: "string",
+            name: "type",
+            label: "Type de projet",
+            options: [
+              { value: "terrasse", label: "Terrasse" },
+              { value: "maconnerie", label: "Maçonnerie" },
+              { value: "amenagement", label: "Aménagement extérieur" },
+              { value: "renovation", label: "Rénovation" },
+              { value: "autre", label: "Autre" },
+            ],
+            required: true,
+          },
+          {
+            type: "string",
+            name: "lieu",
+            label: "Lieu (ville)",
+          },
+          {
+            type: "string",
+            name: "client",
+            label: "Client (optionnel)",
+          },
+          {
+            type: "string",
             name: "excerpt",
-            label: "Résumé",
+            label: "Description courte",
             ui: {
               component: "textarea",
             },
@@ -95,13 +86,41 @@ export default defineConfig({
           },
           {
             type: "string",
-            name: "category",
-            label: "Catégorie",
-            options: [
-              { value: "actualites", label: "Actualités" },
-              { value: "projets", label: "Projets" },
-              { value: "services", label: "Services" },
+            name: "location",
+            label: "Lieu du projet",
+          },
+          {
+            type: "string",
+            name: "surface",
+            label: "Surface (ex: 50m²)",
+          },
+          {
+            type: "string",
+            name: "duration",
+            label: "Durée des travaux",
+          },
+          {
+            type: "object",
+            name: "gallery",
+            label: "Galerie d'images",
+            list: true,
+            fields: [
+              {
+                type: "image",
+                name: "image",
+                label: "Image",
+              },
+              {
+                type: "string",
+                name: "caption",
+                label: "Légende",
+              },
             ],
+          },
+          {
+            type: "boolean",
+            name: "featured",
+            label: "Projet mis en avant",
           },
           {
             type: "boolean",
@@ -112,19 +131,108 @@ export default defineConfig({
           {
             type: "rich-text",
             name: "body",
-            label: "Contenu",
+            label: "Description détaillée",
             isBody: true,
           },
         ],
         ui: {
-          router: ({ document }) => `/blog/${document._sys.filename}`,
+          router: ({ document }) => `/realisations/${document._sys.filename}`,
         },
       },
-      
-      // Collection pour la configuration du site
+
+      // Collection pour les services
+      {
+        name: "service",
+        label: "Services",
+        path: "content/services",
+        format: "mdx",
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Nom du service",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "category",
+            label: "Catégorie",
+            options: [
+              { value: "maconnerie", label: "Maçonnerie" },
+              { value: "terrasse", label: "Terrasses" },
+              { value: "amenagement", label: "Aménagements extérieurs" },
+              { value: "renovation", label: "Rénovation" },
+              { value: "autre", label: "Autre" },
+            ],
+            required: true,
+          },
+          {
+            type: "string",
+            name: "excerpt",
+            label: "Description courte",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "image",
+            name: "icon",
+            label: "Icône/Image du service",
+          },
+          {
+            type: "string",
+            name: "price_range",
+            label: "Fourchette de prix",
+            description: "Ex: À partir de 50€/m²",
+          },
+          {
+            type: "string",
+            name: "duration",
+            label: "Durée indicative",
+            description: "Ex: 2-3 jours",
+          },
+          {
+            type: "object",
+            name: "features",
+            label: "Caractéristiques",
+            list: true,
+            fields: [
+              {
+                type: "string",
+                name: "feature",
+                label: "Caractéristique",
+              },
+            ],
+          },
+          {
+            type: "boolean",
+            name: "featured",
+            label: "Service mis en avant",
+          },
+          {
+            type: "boolean",
+            name: "published",
+            label: "Publié",
+            required: true,
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Description détaillée",
+            isBody: true,
+          },
+        ],
+        ui: {
+          router: ({ document }) => `/services/${document._sys.filename}`,
+        },
+      },
+
+
+      // Configuration de l'entreprise
       {
         name: "config",
-        label: "Configuration",
+        label: "Configuration Entreprise",
         path: "content/config",
         format: "json",
         ui: {
@@ -136,17 +244,28 @@ export default defineConfig({
         fields: [
           {
             type: "string",
-            name: "site_title",
-            label: "Titre du site",
+            name: "company_name",
+            label: "Nom de l'entreprise",
             required: true,
           },
           {
             type: "string",
-            name: "site_description",
-            label: "Description du site",
+            name: "tagline",
+            label: "Slogan",
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Description de l'entreprise",
             ui: {
               component: "textarea",
             },
+          },
+          {
+            type: "image",
+            name: "hero_image",
+            label: "Image de fond page d'accueil",
+            description: "Image qui s'affiche en arrière-plan de la page d'accueil",
           },
           {
             type: "object",
@@ -157,19 +276,78 @@ export default defineConfig({
                 type: "string",
                 name: "phone",
                 label: "Téléphone",
+                required: true,
               },
               {
                 type: "string",
                 name: "email",
                 label: "Email",
+                required: true,
               },
               {
                 type: "string",
                 name: "address",
-                label: "Adresse",
+                label: "Adresse complète",
                 ui: {
                   component: "textarea",
                 },
+              },
+              {
+                type: "string",
+                name: "city",
+                label: "Ville",
+              },
+              {
+                type: "string",
+                name: "postal_code",
+                label: "Code postal",
+              },
+            ],
+          },
+          {
+            type: "object",
+            name: "business",
+            label: "Informations métier",
+            fields: [
+              {
+                type: "string",
+                name: "siret",
+                label: "SIRET",
+              },
+              {
+                type: "string",
+                name: "insurance",
+                label: "Assurance",
+              },
+              {
+                type: "string",
+                name: "zone_intervention",
+                label: "Zone d'intervention",
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "object",
+                name: "horaires",
+                label: "Horaires d'ouverture",
+                fields: [
+                  {
+                    type: "string",
+                    name: "lundi_vendredi",
+                    label: "Lundi - Vendredi",
+                  },
+                  {
+                    type: "string",
+                    name: "samedi",
+                    label: "Samedi",
+                  },
+                  {
+                    type: "string",
+                    name: "dimanche",
+                    label: "Dimanche",
+                  },
+                ],
               },
             ],
           },
