@@ -9,7 +9,17 @@
     "start": "next start",
     "lint": "next lint",
     "tina:dev": "tinacms dev -c \"next dev\"",
-    "tina:build": "tinacms build && next build"
+    "tina:build": "tinacms build && next build",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:audit": "playwright test tests/audit-complet.spec.ts",
+    "test:structure": "playwright test tests/01-structure-navigation.spec.ts",
+    "test:contenu": "playwright test tests/02-contenu-tinacms.spec.ts",
+    "test:interactions": "playwright test tests/03-interactions-utilisateur.spec.ts",
+    "test:performance": "playwright test tests/04-performance-accessibilite.spec.ts",
+    "test:tinacms": "playwright test tests/05-integration-tinacms.spec.ts",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "next": "^14.2.0",
@@ -18,6 +28,7 @@
     "tinacms": "^2.8.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.1",
     "@tinacms/cli": "^1.10.0",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.0",
