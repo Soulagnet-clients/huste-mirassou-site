@@ -14,7 +14,8 @@ interface Realisation {
   description: string;
   body?: any; // Contenu rich-text de TinaCMS
   date: string;
-  type: string;
+  type?: string | { value: string; label: string; }; // Ancien format
+  categorie?: string | { value: string; label: string; }; // Nouveau format
   featured_image?: string;
   gallery?: RealisationGallery[];
   location?: string;
@@ -211,7 +212,17 @@ export default function RealisationModal({ realisation, isOpen, onClose }: Reali
         <div className="flex justify-between items-center p-6 border-b">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">{displayRealisation?.title}</h2>
-            <p className="text-gray-600">{displayRealisation?.type} • {displayRealisation?.date ? new Date(displayRealisation.date).toLocaleDateString('fr-FR') : ''}</p>
+            <p className="text-gray-600">
+              {/* Afficher la catégorie (nouveau ou ancien format) */}
+              {displayRealisation?.categorie
+                ? (typeof displayRealisation.categorie === 'object'
+                   ? displayRealisation.categorie.label
+                   : displayRealisation.categorie)
+                : (typeof displayRealisation?.type === 'object'
+                   ? displayRealisation.type.label
+                   : displayRealisation?.type)
+              } • {displayRealisation?.date ? new Date(displayRealisation.date).toLocaleDateString('fr-FR') : ''}
+            </p>
           </div>
           <button
             onClick={onClose}

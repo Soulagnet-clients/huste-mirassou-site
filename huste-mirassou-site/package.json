@@ -10,6 +10,7 @@
     "lint": "next lint",
     "tina:dev": "tinacms dev -c \"next dev\"",
     "tina:build": "tinacms build && next build",
+    "sync-categories": "node scripts/sync-project-types.js",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",

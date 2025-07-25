@@ -6,7 +6,8 @@ import RealisationModal from './RealisationModal';
 
 interface Realisation {
   title: string;
-  type: string;
+  type?: string | { value: string; label: string; }; // Support ancien format
+  categorie?: string | { value: string; label: string; }; // Nouveau format
   lieu: string;
   excerpt: string;
   featured_image?: string;
@@ -22,6 +23,9 @@ export default function RealisationsSection() {
   const [loading, setLoading] = useState(true);
   const [selectedRealisation, setSelectedRealisation] = useState<Realisation | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categories, setCategories] = useState([{ id: 'all', label: 'Tous' }]);
+  const [projectTypes, setProjectTypes] = useState<ProjectType[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   const openModal = (realisation: Realisation) => {
     setSelectedRealisation(realisation);
@@ -34,13 +38,36 @@ export default function RealisationsSection() {
   };
 
   useEffect(() => {
-    const fetchRealisations = async () => {
+    const fetchData = async () => {
       try {
-        const result = await client.queries.realisationConnection();
-        const realisationsData = result.data.realisationConnection.edges?.map(edge => edge?.node) || [];
+        // Charger les réalisations
+        const realisationsResult = await client.queries.realisationConnection();
+        const realisationsData = realisationsResult.data.realisationConnection.edges?.map(edge => edge?.node) || [];
         setRealisations(realisationsData.filter(realisation => realisation?.published) as Realisation[]);
+
+        // Charger les catégories
+        try {
+          const categoriesResult = await client.queries.categorieConnection();
+          const categoriesData = categoriesResult.data.categorieConnection.edges?.map(edge => edge?.node) || [];
+          const categoriesList = [
+            { id: 'all', label: 'Tous' },
+            ...categoriesData.map((cat: any) => ({ id: cat.value, label: cat.label }))
+          ];
+          setCategories(categoriesList);
+        } catch (error) {
+          console.warn('Impossible de charger les catégories, utilisation des catégories par défaut');
+          setCategories([
+            { id: 'all', label: 'Tous' },
+            { id: 'terrasse', label: 'Terrasse' },
+            { id: 'maconnerie', label: 'Maçonnerie' },
+            { id: 'amenagement', label: 'Aménagement extérieur' },
+            { id: 'renovation', label: 'Rénovation' },
+            { id: 'autre', label: 'Autre' }
+          ]);
+        }
+
       } catch (error) {
-        console.error('Erreur lors du chargement des réalisations:', error);
+        console.error('Erreur lors du chargement des données:', error);
         // Données par défaut en cas d'erreur
         setRealisations([
           {
@@ -65,20 +92,25 @@ export default function RealisationsSection() {
       }
     };
 
-    fetchRealisations();
+    fetchData();
   }, []);
 
-  const categories = [
-    { id: 'all', label: 'Tous' },
-    { id: 'terrasse', label: 'Terrasses' },
-    { id: 'maconnerie', label: 'Maçonnerie' },
-    { id: 'amenagement', label: 'Aménagements' },
-    { id: 'renovation', label: 'Rénovation' }
-  ];
+
 
   const filteredRealisations = selectedCategory === 'all'
     ? realisations
-    : realisations.filter(r => r.type === selectedCategory);
+    : realisations.filter(r => {
+        // Si c'est une référence (objet), on prend la valeur
+        if (typeof r.categorie === 'object' && r.categorie?.value) {
+          return r.categorie.value === selectedCategory;
+        }
+        // Ancien format avec "type"
+        if (typeof r.type === 'object' && r.type?.value) {
+          return r.type.value === selectedCategory;
+        }
+        // Sinon c'est une string (ancien format)
+        return r.type === selectedCategory || r.categorie === selectedCategory;
+      });
 
   return (
     <section id="realisations" className="py-20 bg-white">

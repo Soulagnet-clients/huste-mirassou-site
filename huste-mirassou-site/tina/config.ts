@@ -1,4 +1,7 @@
 import { defineConfig } from "tinacms";
+import "./init"; // Appliquer les correctifs console
+
+
 
 // Configuration de la branche Git
 const branch =
@@ -28,12 +31,52 @@ export default defineConfig({
   // Schéma de contenu
   schema: {
     collections: [
+      {
+        name: "categorie",          // identifiant interne (singulier)
+        label: "Catégories",        // texte affiché dans Tina
+        path: "content/categories", // où seront créés les fichiers (ex : my‑category.mdx)
+        format: "md",               // ou "json" si tu préfères
+        fields: [
+          {
+            type: "string",
+            name: "label",
+            label: "Nom affiché",
+            description: "Nom qui s'affiche dans l'interface",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "value",
+            label: "ID de la catégorie (technique)",
+            description: "Identifiant unique en minuscules, sans espaces (ex: terrasse, maconnerie)",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "title",
+            label: "Titre (optionnel)",
+            description: "Titre pour la page de la catégorie",
+            required: false,
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Description",
+            description: "Description de la catégorie de projet",
+            ui: {
+              component: "textarea",
+            },
+          },
+        ],
+      },
       // Collection pour les réalisations
       {
         name: "realisation",
         label: "Réalisations",
         path: "content/realisations",
         format: "mdx",
+
         fields: [
           {
             type: "string",
@@ -49,17 +92,17 @@ export default defineConfig({
             required: true,
           },
           {
-            type: "string",
-            name: "type",
-            label: "Type de projet",
-            options: [
-              { value: "terrasse", label: "Terrasse" },
-              { value: "maconnerie", label: "Maçonnerie" },
-              { value: "amenagement", label: "Aménagement extérieur" },
-              { value: "renovation", label: "Rénovation" },
-              { value: "autre", label: "Autre" },
-            ],
-            required: true,
+            type: "reference",
+            name: "categorie",      // ou "categories" + list:true si multi
+            label: "Catégorie",
+            collections: ["categorie"],
+            list: false,            // true ➜ plusieurs catégories possibles
+            required: false,
+            ui: {
+              optionComponent: (props: any) => {
+                return props.label || props.title || 'Catégorie';
+              }
+            }
           },
           {
             type: "string",
@@ -104,6 +147,20 @@ export default defineConfig({
             name: "gallery",
             label: "Galerie d'images",
             list: true,
+            ui: {
+              itemProps: (item) => {
+                // Afficher une prévisualisation de l'image dans le titre
+                const imageName = item?.image ? item.image.split('/').pop() : 'Nouvelle image';
+                const caption = item?.caption ? ` - ${item.caption}` : '';
+                return {
+                  label: `🖼️ ${imageName}${caption}`,
+                };
+              },
+              defaultItem: {
+                image: "",
+                caption: "",
+              },
+            },
             fields: [
               {
                 type: "image",
@@ -113,7 +170,10 @@ export default defineConfig({
               {
                 type: "string",
                 name: "caption",
-                label: "Légende",
+                label: "Légende (optionnelle)",
+                ui: {
+                  component: "textarea",
+                },
               },
             ],
           },
@@ -135,9 +195,6 @@ export default defineConfig({
             isBody: true,
           },
         ],
-        ui: {
-          router: ({ document }) => `/realisations/${document._sys.filename}`,
-        },
       },
 
       // Collection pour les services
@@ -154,19 +211,7 @@ export default defineConfig({
             isTitle: true,
             required: true,
           },
-          {
-            type: "string",
-            name: "category",
-            label: "Catégorie",
-            options: [
-              { value: "maconnerie", label: "Maçonnerie" },
-              { value: "terrasse", label: "Terrasses" },
-              { value: "amenagement", label: "Aménagements extérieurs" },
-              { value: "renovation", label: "Rénovation" },
-              { value: "autre", label: "Autre" },
-            ],
-            required: true,
-          },
+
           {
             type: "string",
             name: "excerpt",
@@ -223,9 +268,6 @@ export default defineConfig({
             isBody: true,
           },
         ],
-        ui: {
-          router: ({ document }) => `/services/${document._sys.filename}`,
-        },
       },
 
 
@@ -235,6 +277,9 @@ export default defineConfig({
         label: "Configuration Entreprise",
         path: "content/config",
         format: "json",
+        match: {
+          include: "entreprise"
+        },
         ui: {
           allowedActions: {
             create: false,
