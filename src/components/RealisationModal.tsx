@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
-import { client } from '../../huste-mirassou-site/tina/__generated__/client';
+import { client } from '../../tina/__generated__/client';
 import { Realisation, RealisationGallery } from '../types';
 
 interface RealisationModalProps {
