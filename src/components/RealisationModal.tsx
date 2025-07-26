@@ -186,7 +186,7 @@ export default function RealisationModal({ realisation, isOpen, onClose }: Reali
       />
       
       {/* Contenu du modal */}
-      <div className="relative bg-white rounded-lg max-w-7xl max-h-[90vh] w-full mx-4 overflow-hidden" data-testid="realisation-modal">
+      <div className="relative bg-white rounded-lg max-w-7xl max-h-[95vh] w-full mx-2 sm:mx-4 overflow-hidden" data-testid="realisation-modal">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b">
           <div>
@@ -216,7 +216,7 @@ export default function RealisationModal({ realisation, isOpen, onClose }: Reali
           <div className="lg:w-3/5 relative">
             {allImages.length > 0 && currentImage ? (
               <>
-                <div className="relative h-96 lg:h-[550px] bg-gray-100">
+                <div className="relative h-48 sm:h-64 lg:h-[550px] bg-gray-100">
                   {/* Image actuelle (toujours visible) */}
                   <img
                     src={currentImage.image}
@@ -297,7 +297,7 @@ export default function RealisationModal({ realisation, isOpen, onClose }: Reali
                 )}
               </>
             ) : (
-              <div className="h-96 lg:h-[550px] bg-gray-200 flex items-center justify-center">
+              <div className="h-48 sm:h-64 lg:h-[550px] bg-gray-200 flex items-center justify-center">
                 <div className="text-center text-gray-500">
                   <svg className="w-16 h-16 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M4 4h16v12H4V4zm2 2v8h12V6H6zm2 2h8v4H8V8z" />
@@ -309,7 +309,7 @@ export default function RealisationModal({ realisation, isOpen, onClose }: Reali
           </div>
 
           {/* Section Informations */}
-          <div className="lg:w-2/5 px-6 pb-6 bg-gray-50 overflow-y-auto max-h-[calc(90vh-120px)]" style={{paddingTop: '5px'}}>
+          <div className="lg:w-2/5 px-4 sm:px-6 pb-6 bg-gray-50 overflow-y-auto max-h-[calc(95vh-200px)] sm:max-h-[calc(95vh-280px)] lg:max-h-[calc(95vh-120px)]" style={{paddingTop: '5px'}}>
             <div className="space-y-6">
               {/* Description détaillée uniquement */}
               {isLoading ? (
