@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { client } from '../../tina/__generated__/client';
+import { client } from '../../huste-mirassou-site/tina/__generated__/client';
 
 interface Service {
   title: string;
