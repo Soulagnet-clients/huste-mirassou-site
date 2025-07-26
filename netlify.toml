@@ -2,8 +2,8 @@
   # Commande de build pour TinaCMS Cloud + Next.js
   command = "npm ci --include=dev && npx @tinacms/cli build && npm run build"
 
-  # Dossier de sortie Next.js (mode serveur)
-  publish = ".next"
+  # Dossier de sortie Next.js (mode statique)
+  publish = "out"
 
   # Variables d'environnement pour le build
   environment = { NODE_VERSION = "18", SECRETS_SCAN_ENABLED = "false" }
