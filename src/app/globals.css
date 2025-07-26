@@ -1,6 +1,15 @@
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind base;
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind components;
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind utilities;
+
+/* Scroll smooth avec offset pour navigation fixe */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px; /* Hauteur réduite pour masquer l'image d'accueil */
+}
 
 /* Animation pour la transition d'images */
 @keyframes fadeIn {

@@ -95,7 +95,12 @@ export default function HeroSection() {
           <button
             onClick={() => {
               const element = document.getElementById('realisations');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
+              if (element) {
+                element.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
             }}
             className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors"
           >
@@ -104,7 +109,12 @@ export default function HeroSection() {
           <button
             onClick={() => {
               const element = document.getElementById('devis');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
+              if (element) {
+                element.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
             }}
             className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-gray-800 transition-colors"
           >

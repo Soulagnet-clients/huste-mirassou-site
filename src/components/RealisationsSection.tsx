@@ -192,7 +192,7 @@ export default function RealisationsSection() {
         )}
 
         {/* Call to action */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <p className="text-gray-600 mb-6">
             Vous avez un projet similaire ? Parlons-en !
           </p>
