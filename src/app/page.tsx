@@ -1,11 +1,11 @@
 'use client';
 
-import Navigation from '@/components/Navigation';
-import HeroSection from '@/components/HeroSection';
-import ServicesSection from '@/components/ServicesSection';
-import RealisationsSection from '@/components/RealisationsSection';
-import DevisSection from '@/components/DevisSection';
-import ContactSection from '@/components/ContactSection';
+import Navigation from '../components/Navigation';
+import HeroSection from '../components/HeroSection';
+import ServicesSection from '../components/ServicesSection';
+import RealisationsSection from '../components/RealisationsSection';
+import DevisSection from '../components/DevisSection';
+import ContactSection from '../components/ContactSection';
 
 export default function HomePage() {
   return (
