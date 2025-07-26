@@ -1,4 +1,7 @@
 [build]
+  # Dossier de base du projet Next.js
+  base = "huste-mirassou-site"
+  
   # Commande de build pour TinaCMS Cloud + Next.js
   command = "npx @tinacms/cli build && npm run build"
 
