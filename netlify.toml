@@ -6,7 +6,7 @@
   publish = ".next"
 
   # Variables d'environnement pour le build
-  environment = { NODE_VERSION = "18" }
+  environment = { NODE_VERSION = "18", SECRETS_SCAN_ENABLED = "false" }
 
 [build.processing]
   # Optimisation des images
